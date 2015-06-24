@@ -16,7 +16,8 @@ function mln_CalEvaN(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
 
 % Huifang Wang, Marseille, Nov 25, 2013,  Calculate all
 % datasets, Get the AUC
-VGroupMethlog={'TimeBasic','FreqBasic','Hsquare','Granger','FreqAH','MutualInform','TE'};
+VGroupMethlog={'TimeBasic','FreqBasic','Hsquare','Granger', ...
+               'FreqAH','MutualInform','TE', 'Genie', 'Tigress'};
 
 if ~exist(dirname,'dir')
     mkdir(dirname);
@@ -61,7 +62,8 @@ switch models
     case 'rossler'
         dataname=mln_generate_rossler(dirname,prename,npts,strfile,is,cs,0,0,1);
     case 'henon'
-        dataname=mln_generate_henon(dirname,prename,npts,strfile,is,cs,0,0,1);
+        dataname=mln_generate_henon(dirname,prename,npts,strfile, ...
+                                    is,cs,0,0,1);
 end
 
 MULANCalMUltiBP(dirname,dataname,paramsfile,VGroupMethlog)
