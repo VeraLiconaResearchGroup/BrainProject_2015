@@ -1,0 +1,18 @@
+function strfile = genstrfile(nodes, edges)
+
+strfile = cell(1);
+matrix = zeros(2, edges);
+min = 1;
+max = (nodes + 1);
+
+% Assigns random connections to each node
+for e=1:edges
+  matrix(1,e) = e;
+  val = e;
+  while (val == e)
+    val = cast(((max-min).*rand + min),'int16');
+  end
+  matrix(2,e) = val;
+end
+strfile{1,1} = matrix;
+save(['structureN' int2str(nodes) 'L' int2str(edges) '.mat'], 'strfile');
