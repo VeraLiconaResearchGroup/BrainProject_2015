@@ -1,13 +1,10 @@
-function mln_calcMatMITime(Resultfile,VMethlog,lfp,params)
-
-%% to calculate the connectivity matrix for Mvar_based methods in Methlog
-% Methlog:  'MVAR': MVAR
-% Huifang Wang, June 8, 2012, Inserm U1106, Marseille
+function mln_calcMatGenie(Resultfile,VMethlog,lfp,params)
 if iscell(VMethlog)
     Methlog=char(VMethlog{1});
 else
     Methlog=VMethlog;
 end
+
 NMlog=length(Methlog);
 if exist(Resultfile,'file')
     Rconnect=load(Resultfile);
@@ -34,6 +31,8 @@ else
     overlap_p=0;
     Nwindows=floor(Ntime/params.wins);
 end
+
+
 % initialization
 Dmatt=[Nchannel,Nchannel,Nwindows];
 NMeths=length(VMethlog);
@@ -49,15 +48,24 @@ VMethodlog=fieldnames(Mat);
 Nmethod=length(VMethodlog);
 for i=1:Nwindows
     i_lfp=lfp(:,floor((i-1)*(params.wins-overlap_p)+1):floor(i*params.wins-(i-1)*overlap_p));
-    iMat=mln_icalcMatMITime(i_lfp,params);
+
+    input_idx = 1:Nchannel;
+    K = Nchannel;
+    
+    if round(params.genieMethod) == 0
+        tree_method = 'RF';
+    else
+        tree_method = 'ET';
+    end
+    
+    iMat = genie3(i_lfp', input_idx, tree_method, K, params.genieNbTrees);
+
     for j=1:Nmethod
         jMethodlog=char(VMethodlog(j));
-        if istimeM(jMethodlog)
-            Mat.(jMethodlog)(:,:,i)=iMat.(jMethodlog);
-        else
-            Mat.(jMethodlog)(:,:,:,i)=iMat.(jMethodlog);
-        end
+        
+        Mat.(jMethodlog)(:,:,i)=iMat;
     end
+    
 end
 
 updateResult(Resultfile,Mat,params);

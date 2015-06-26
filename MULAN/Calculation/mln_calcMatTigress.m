@@ -1,13 +1,11 @@
-function mln_calcMatMITime(Resultfile,VMethlog,lfp,params)
+function mln_calcMatTigress(Resultfile,VMethlog,lfp,params)
 
-%% to calculate the connectivity matrix for Mvar_based methods in Methlog
-% Methlog:  'MVAR': MVAR
-% Huifang Wang, June 8, 2012, Inserm U1106, Marseille
 if iscell(VMethlog)
     Methlog=char(VMethlog{1});
 else
     Methlog=VMethlog;
 end
+
 NMlog=length(Methlog);
 if exist(Resultfile,'file')
     Rconnect=load(Resultfile);
@@ -34,6 +32,8 @@ else
     overlap_p=0;
     Nwindows=floor(Ntime/params.wins);
 end
+
+
 % initialization
 Dmatt=[Nchannel,Nchannel,Nwindows];
 NMeths=length(VMethlog);
@@ -49,15 +49,33 @@ VMethodlog=fieldnames(Mat);
 Nmethod=length(VMethodlog);
 for i=1:Nwindows
     i_lfp=lfp(:,floor((i-1)*(params.wins-overlap_p)+1):floor(i*params.wins-(i-1)*overlap_p));
-    iMat=mln_icalcMatMITime(i_lfp,params);
+    data.expdata = lfp';
+    R = params.tigressR;
+    alpha = params.tigressAlpha;
+    L = params.tigressL;
+
+    if round(params.tigressLarsAlgo) == 0
+        LarsAlgo = 'lars';
+    else
+        LarsAlgo = 'glmnet';
+    end
+    
+    if round(params.tigressScoreMethod) == 0
+        method = 'area';
+    else
+        method = 'original';
+    end
+    
+    freq = tigress(data, 'R', R, 'alpha', alpha, 'L', L, 'LarsAlgo', ...
+                   LarsAlgo);
+    iMat=score_edges(freq, 'method', method);   
+        
     for j=1:Nmethod
         jMethodlog=char(VMethodlog(j));
-        if istimeM(jMethodlog)
-            Mat.(jMethodlog)(:,:,i)=iMat.(jMethodlog);
-        else
-            Mat.(jMethodlog)(:,:,:,i)=iMat.(jMethodlog);
-        end
+        
+        Mat.(jMethodlog)(:,:,i)=iMat;
     end
+    
 end
 
 updateResult(Resultfile,Mat,params);

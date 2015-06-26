@@ -75,9 +75,9 @@ for igroup=1:Ngroup
       case 'TE'
         mln_calcMatTE(Resultfile,Methlogs,lfp,params);
       case 'Tigress'
-        
+        mln_calcMatTigress(Resultfile,Methlogs,lfp,params);
       case 'Genie'
-        
+        mln_calcMatGenie(Resultfile,Methlogs,lfp,params);
     end
 end
 
@@ -88,7 +88,7 @@ param_df=struct('wins',calParams.defwindow,...
                 'modelOrder',calParams.defmodelorders,...
                 'minfreq',calParams.minfreq,'maxfreq',calParams.maxfreq,'stepfreq',calParams.stepfreq,...
                 'bins',calParams.defbins,...
-                'MaxDelay',calParams.defMaxDelay);
+                'MaxDelay',calParams.defMaxDelay,'genieMethod',calParams.genieMethod,'genieNbTrees',calParams.genieNbTrees,'tigressR',calParams.tigressR,'tigressAlpha',calParams.tigressAlpha,'tigressL',calParams.tigressL,'tigressLarsAlgo',calParams.tigressLarsAlgo,'tigressScoreMethod',calParams.tigressScoreMethod);
 
 Nparamf=length(paramsfields);
 paramsdata=cell(Nparamf,2);

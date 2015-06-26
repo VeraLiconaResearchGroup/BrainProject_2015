@@ -16,6 +16,15 @@ function mln_CalEvaN(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
 
 % Huifang Wang, Marseille, Nov 25, 2013,  Calculate all
 % datasets, Get the AUC
+
+
+
+mex ../GENIE/RT/rtree-c/rtenslearn_c.c;
+ext = mexext;
+movefile(fullfile(pwd, ['rtenslearn_c' '.' ext]), fullfile('../GENIE/RT/', ...
+                                                  ['rtenslearn_c' '.' ext]));
+
+
 VGroupMethlog={'TimeBasic','FreqBasic','Hsquare','Granger', ...
                'FreqAH','MutualInform','TE', 'Genie', 'Tigress'};
 
