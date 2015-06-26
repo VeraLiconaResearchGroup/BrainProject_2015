@@ -1,4 +1,4 @@
-function calcMatFreqBasic(Resultfile,VMethlog,lfp,params)
+function mln_calcMatFreqBasic(Resultfile,VMethlog,lfp,params)
 %% to calculate the connectivity matrix for FreqBasic methods in Methlog
 
 % Huifang Wang, June 9, 2012, Inserm U1106, Marseille
@@ -11,7 +11,7 @@ if  ~isempty(find(strncmpi(oddfieldname,Methlog,NMlog)==1,1))% if there is resul
    % try to find the results with the same parameters
    Nmethlog=length(Rconnect.(Methlog));
    for i=1:Nmethlog
-     if compareparams(Rconnect.(Methlog)(i).Params,params)  
+     if mln_compareparams(Rconnect.(Methlog)(i).Params,params)  
         %Net=Rconnect.(Methlog)(i);
         return;
      end
