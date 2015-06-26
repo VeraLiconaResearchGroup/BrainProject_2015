@@ -63,9 +63,12 @@ for i=1:Nwindows
     for j=1:Nmethod
         jMethodlog=char(VMethodlog(j));
         
-        Mat.(jMethodlog)(:,:,i)=iMat;
+        if istimeM(jMethodlog)
+            Mat.(jMethodlog)(:,:,i)=iMat;
+        else
+            Mat.(jMethodlog)(:,:,:,i)=iMat;
+        end
     end
-    
 end
 
 updateResult(Resultfile,Mat,params);
