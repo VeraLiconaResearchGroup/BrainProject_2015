@@ -10,6 +10,8 @@ calParams.defbins='16';
 calParams.defMaxDelay='5';
 calParams.genieMethod = '0';
 calParams.genieNbTrees = '500';
+calParams.genieK = '0';
+
 calParams.tigressR = '500';
 calParams.tigressAlpha = '0.3';
 calParams.tigressL = '3';

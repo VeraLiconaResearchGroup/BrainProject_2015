@@ -50,7 +50,14 @@ for i=1:Nwindows
     i_lfp=lfp(:,floor((i-1)*(params.wins-overlap_p)+1):floor(i*params.wins-(i-1)*overlap_p));
 
     input_idx = 1:Nchannel;
-    K = Nchannel;
+    
+    if round(params.genieK) == 0
+        K = 'sqrt';
+    elseif params.genieK < 0
+        K = 'all';        
+    else
+        K = round(params.genieK);
+    end
     
     if round(params.genieMethod) == 0
         tree_method = 'RF';
@@ -58,7 +65,7 @@ for i=1:Nwindows
         tree_method = 'ET';
     end
     
-    iMat = genie3(i_lfp', input_idx, tree_method, K, params.genieNbTrees);
+    iMat = genie3(i_lfp', input_idx, tree_method, K, round(params.genieNbTrees));
 
     for j=1:Nmethod
         jMethodlog=char(VMethodlog(j));

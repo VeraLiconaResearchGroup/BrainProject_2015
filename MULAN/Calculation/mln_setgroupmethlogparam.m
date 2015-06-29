@@ -33,7 +33,8 @@ switch GroupMethlog
     paramsfields={'wins','overlap','MaxDelay'};
   case 'Genie'
     methods_in_group={'Genie'}
-    paramsfields = {'wins','overlap', 'genieMethod', 'genieNbTrees'}
+    paramsfields = {'wins','overlap', 'genieMethod', 'genieNbTrees', ...
+                   'genieK'}
   case 'Tigress'
     methods_in_group={'Tigress'}
     paramsfields = {'wins','overlap', 'tigressR', 'tigressAlpha', ...

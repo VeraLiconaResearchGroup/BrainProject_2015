@@ -3,7 +3,7 @@
 % Huifang Wang Feb 7, 2014, Demo for demonstrate the AUC array and Boxplot in the paper
 
 function mln_showAUC
-load('ExAUCnmmN5L5.mat','AUCall','Informa')
+load('AUC_nmmfmriCS100S20N3000.mat','AUCall','Informa')
 colormapnowall=colormap(lines);
 cs=Informa.cs;
 is=Informa.is;
@@ -15,9 +15,12 @@ prenom=[model,struct];
 
 
 shownMethods={'BCohF','PCohF','BCohW','PCohW',...
-    'BCorrU','PCorrU','BCorrD','PCorrD', 'BH2U','PH2U','BH2D','PH2D','BMITU','PMITU','BMITD1','PMITD1','BMITD2','PMITD2'...
-                         'BTEU','PTEU','BTED','PTED',...,
-                         'GC','PGC','CondGC','MVAR','AS','Af','PDC','oPDCF','GPDC','DC1','DTF','GGC','ffDTF','dDTF','COH1','pCOH1','COH2','pCOH2','Smvar','hmvar'};
+              'BCorrU','PCorrU','BCorrD','PCorrD', 'BH2U','PH2U','BH2D','PH2D','BMITU','PMITU','BMITD1','PMITD1','BMITD2','PMITD2'...
+              'BTEU','PTEU','BTED','PTED',...,
+              'GC','PGC','CondGC','MVAR','AS','Af', ...
+              'PDC','oPDCF','GPDC','DC1','DTF','GGC','ffDTF', ...
+              'dDTF','COH1','pCOH1','COH2','pCOH2','Smvar','hmvar', ...
+              'Tigress', 'Genie'};
 
 Nis=length(is);
 Nmethods=42;
@@ -77,12 +80,12 @@ for inumbers=1:length(numbers)
 end
 colorgroup=colorgroup(end:-1:1,:);
 hobj = findobj(gca,'Tag','Box');
- for j=1:length(hobj)
+for j=1:length(hobj)
     patch(get(hobj(j),'XData'),get(hobj(j),'YData'),colorgroup(j,:),'FaceAlpha',.5);
- end
+end
 
- set(gca,'YLim',[0.3,1])
- title(['Boxplot on 154 different structures: connection strength=',num2str(dcs/100)],'Fontsize',15);
+set(gca,'YLim',[0.3,1])
+title(['Boxplot on 154 different structures: connection strength=',num2str(dcs/100)],'Fontsize',15);
 
 
 

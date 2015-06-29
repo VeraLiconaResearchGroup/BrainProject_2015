@@ -50,9 +50,9 @@ Nmethod=length(VMethodlog);
 for i=1:Nwindows
     i_lfp=lfp(:,floor((i-1)*(params.wins-overlap_p)+1):floor(i*params.wins-(i-1)*overlap_p));
     data.expdata = lfp';
-    R = params.tigressR;
+    R = round(params.tigressR);
     alpha = params.tigressAlpha;
-    L = params.tigressL;
+    L = round(params.tigressL);
 
     if round(params.tigressLarsAlgo) == 0
         LarsAlgo = 'lars';
