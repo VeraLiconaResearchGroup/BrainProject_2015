@@ -1,3 +1,4 @@
+%%Converts a DREAM5 method results text file into a mat format for MULAN to evaluate
 % Change filename when actually loading results
 fileID = fopen('test.txt');
 orig = textscan(fileID, '%s %s %f');
