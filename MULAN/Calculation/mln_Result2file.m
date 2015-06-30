@@ -14,16 +14,16 @@ for igroup=1:length(GroupMethlog)
         Methlog=fieldname{imethods};
          if  strncmpi(Methlog,'Standard',8)
             continue;
-        end
+         end
        
-        if is3d
-            Mat=iNetSaved.(Methlog).Mat;
-        else
-            NetCalcd=iNetSaved.(Methlog);
-            Mat=squeeze(mean(abs(NetCalcd.Mat),3));
+         if is3d
+             Mat=iNetSaved.(Methlog).Mat;
+         else
+             NetCalcd=iNetSaved.(Methlog);
+             Mat=squeeze(mean(abs(NetCalcd.Mat),3));
             
-        end
-        NewStru.(Methlog)=Mat;
+         end
+         NewStru.(Methlog)=Mat;
       
     end    
     iParams=iNetSaved.(Methlog).Params;
