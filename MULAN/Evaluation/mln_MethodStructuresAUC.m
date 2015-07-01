@@ -20,35 +20,44 @@ fieldname(strcmp('Connectivity',fieldname))=[];
 Nmethod=length(fieldname);
 Meths.MSAUC=zeros(Nmethod,1);
 Meths.Mth=zeros(Nmethod,1);
+Meths.Fpr=zeros(Nmethod,100);
+Meths.Tpr=zeros(Nmethod,100);
+
 filesaved=['AUC_',prenom,'.mat'];
 
 Meths.Methodnames=fieldname;
 
 Meths.Connectivity=calresult.Connectivity;
+
+for imethod=1:Nmethod
+    Methods=fieldname{imethod};
+    Mat=calresult.(Methods);
+    if isnan(max(Mat))
+        
+        auc=0;
+        chis=1;
+        iMat=NaN(size(Mat,1));
+        Fpr=zeros(100,1);
+        Tpr=zeros(100,1);
+        
+    else
+        iMat=mean(abs(Mat),3);
+        iMat=iMat-diag(diag(iMat));
+        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3]=mln_calc_FalseRate(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
+        chis=mln_chis(Mat,thresh3(1));
+    end
     
-        for imethod=1:Nmethod
-            Methods=fieldname{imethod};
-            Mat=calresult.(Methods);
-            if isnan(max(Mat))
-                
-                auc=0;
-                chis=1;
-                iMat=NaN(size(Mat,1));
-                
-            else
-            iMat=mean(abs(Mat),3);
-            iMat=iMat-diag(diag(iMat));
-            [~,~,~,~,~,~,~,~,auc,~,thresh3] =mln_calc_FalseRate(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
-            chis=mln_chis(Mat,thresh3(1));
-            end
-            Meths.MSAUC(imethod,1)=auc;
-            
-            if isempty(chis)
-                pause
-            end
-            Meths.Mth(imethod,1)=chis;
-            Meths.Mat(:,:,imethod)=iMat;
-        end
+    Meths.MSAUC(imethod,1)=auc;
+    Meths.Fpr(imethod,:) = squeeze(Fpr);
+    Meths.Tpr(imethod,:) = squeeze(Tpr);
+    
+    if isempty(chis)
+        pause
+    end
+    
+    Meths.Mth(imethod,1)=chis;
+    Meths.Mat(:,:,imethod)=iMat;
+end
 
 
 save(['./',dirname,'/AUC/',filesaved],'Meths');

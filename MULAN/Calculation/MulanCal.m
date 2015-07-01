@@ -59,6 +59,8 @@ for igroup=1:Ngroup
     [Methlogs,paramsfields]=mln_setgroupmethlogparam(GroupMethlog);
     params=initialparamsmethodsGiven(paramsfields,calParams);
     params.fs=Params.fs;
+    
+    tic
     switch GroupMethlog
       case 'TimeBasic'
         mln_calcMatTimeBasic(Resultfile,Methlogs,lfp,params);
@@ -79,7 +81,15 @@ for igroup=1:Ngroup
       case 'Genie'
         mln_calcMatGenie(Resultfile,Methlogs,lfp,params);
     end
+    
+    timerVal = toc;
+    Time.(GroupMethlog) = timerVal;
+    
 end
+
+filesaved=[dirname,'/ToutResults/Time_',dataprenom];
+save(filesaved,'-struct','Time');
+
 
 function params=initialparamsmethodsGiven(paramsfields,calParams)
 
