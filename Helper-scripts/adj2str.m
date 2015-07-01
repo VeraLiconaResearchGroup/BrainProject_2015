@@ -3,11 +3,13 @@ function PGS = adj2str(adj, nodes, edges)
 
 PGS = cell(1);
 matrix = zeros(2,edges);
+counter = 0;
 for i=1:nodes
     for j=1:nodes
         if adj(i,j)==1
             matrix(2,counter)=i;
             matrix(1,counter)=j;
+            counter = counter + 1;
         end
     end
 end
