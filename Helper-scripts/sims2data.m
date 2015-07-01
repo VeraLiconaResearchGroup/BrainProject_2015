@@ -1,9 +1,9 @@
 %Converts the NetSim data into a MULAN time series dataset
-sims2data(sims)
+function sims2data(simname)
+sims = load([simname '.mat']);
   for i=1:sims.Nsubjects
-    LFP = sims.ts(int32(i-1).*200:i.*200,:)';
-    Connectivity = sims.net(i,:,:);
-    Params = zeros(1,1);
+    LFP = sims.ts(((i-1)*200)+1:(i*200),:)';
+    Connectivity = squeeze(sims.net(i,:,:));
     Params.fs = 0.500;
-    save(sims '_' i '.mat', 'LFP', 'Connectivity', 'Params');
+    save([simname '_', num2str(i), '.mat'], 'LFP', 'Connectivity', 'Params');
   end
