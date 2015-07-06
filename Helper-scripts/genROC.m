@@ -4,5 +4,7 @@ function genROC(Meths)
   y = Meths.Tpr;
   x = x';
   y = y';
+  figure;
   plot(x,y);
   legend(Meths.Methodnames, 'Location', 'southoutside');
+  saveas(gcf, 'AUCplot.pdf');
