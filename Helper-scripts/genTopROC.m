@@ -1,5 +1,5 @@
 function genTopROC(filename, number)
-  load([filename '.mat']);
+  load(filename);
   AUC = Meths.MSAUC;
   row = zeros(size(AUC):1);
   for i=1:size(AUC)
@@ -12,13 +12,18 @@ function genTopROC(filename, number)
   TPR = Meths.Tpr';
   x = FPR(:,AUC(1,2));
   y = TPR(:,AUC(1,2));
-  names = Meths.Methodnames(1,:);
+  names = strcat(Meths.Methodnames(1,:), '-AUC: ', num2str(AUC(1,1)));
   for i=2:number
     x = horzcat(x, FPR(:,AUC(i,2)));
     y = horzcat(y, TPR(:,AUC(i,2)));
-    names = [names, Meths.Methodnames(AUC(i,2),:)];
+    names = [names, strcat(Meths.Methodnames(AUC(i,2),:), '-AUC: ', num2str(AUC(i,1)))];
   end
   figure;
+  
   plot(x,y);
   legend(names, 'Location', 'eastoutside');
-  saveas(gcf, [filename '_top' int2str(number) 'ROC.pdf']);
+  hold on;
+  m = 1; b = 0; x = 0:1;
+  plot(x, m*x+b, '--k');
+  hold off;
+  saveas(gcf, [filename(1,1:size(filename,2)-4) '_top' int2str(number) 'ROC.pdf']);
