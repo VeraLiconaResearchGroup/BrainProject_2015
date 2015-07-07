@@ -1,3 +1,4 @@
+%% Takes AUC results from MULAN and number of best AUC results to plot the top ROC curves
 function genTopROC(filename, number)
   load(filename);
   AUC = Meths.MSAUC;
@@ -19,7 +20,6 @@ function genTopROC(filename, number)
     names = [names, strcat(Meths.Methodnames(AUC(i,2),:), '-AUC: ', num2str(AUC(i,1)))];
   end
   figure;
-  
   plot(x,y);
   legend(names, 'Location', 'eastoutside');
   hold on;
