@@ -13,5 +13,6 @@ addpath (fullfile(mfilepath, './GENIE/RT'))
 addpath (fullfile(mfilepath, './TIGRESS'))
 addpath (fullfile(mfilepath, './TIGRESS/lars'))
 addpath (fullfile(mfilepath, './ScaleFree'))
+addpath (fullfile(mfilepath, './Helper-scripts'))
 cd ./MULAN
 mln_generateParams

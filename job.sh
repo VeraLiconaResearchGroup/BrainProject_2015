@@ -1,4 +1,3 @@
 #!/bin/sh
 
-matlab -nodisplay -nosplash -nodesktop -r start_cluster >> /home/CAM/veralicona/Documents/BCN.txt
-
+matlab -nodisplay -nosplash -nodesktop -r start_cluster >> /home/CAM/veralicona/shichao/output.txt

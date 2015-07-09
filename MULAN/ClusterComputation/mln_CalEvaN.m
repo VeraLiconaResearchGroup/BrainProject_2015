@@ -19,10 +19,10 @@ function mln_CalEvaN(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
 
 
 
-mex ../GENIE/RT/rtree-c/rtenslearn_c.c;
-ext = mexext;
-movefile(fullfile(pwd, ['rtenslearn_c' '.' ext]), fullfile('../GENIE/RT/', ...
-                                                  ['rtenslearn_c' '.' ext]));
+%mex ../GENIE/RT/rtree-c/rtenslearn_c.c;
+%ext = mexext;
+%movefile(fullfile(pwd, ['rtenslearn_c' '.' ext]), fullfile('../GENIE/RT/', ...
+%                                                  ['rtenslearn_c' '.' ext]));
 
 
 VGroupMethlog={'TimeBasic','FreqBasic','Hsquare','Granger', ...

@@ -13,17 +13,27 @@ function genTopROC(filename, number)
   TPR = Meths.Tpr';
   x = FPR(:,AUC(1,2));
   y = TPR(:,AUC(1,2));
-  names = strcat(Meths.Methodnames(1,:), '-AUC: ', num2str(AUC(1,1)));
+  count = 1;
+  names = cell(number, 1);
+  name = sprintf('%s %s', Meths.Methodnames{1}, num2str(AUC(1, 1)));
+  names(count,:) = {name};
+  
   for i=2:number
     x = horzcat(x, FPR(:,AUC(i,2)));
     y = horzcat(y, TPR(:,AUC(i,2)));
-    names = [names, strcat(Meths.Methodnames(AUC(i,2),:), '-AUC: ', num2str(AUC(i,1)))];
+    count = count + 1;
+    name = sprintf('%s %s', Meths.Methodnames{AUC(i,2)}, num2str(AUC(i,1)));
+    names(count,:) = {name};
   end
-  figure;
+  
+  figure();
+  set(gcf,'Visible', 'off');
   plot(x,y);
-  legend(names, 'Location', 'eastoutside');
+  legend(names, 'Fontsize', 7, 'location','eastoutside');
+  
   hold on;
   m = 1; b = 0; x = 0:1;
   plot(x, m*x+b, '--k');
   hold off;
+  
   saveas(gcf, [filename(1,1:size(filename,2)-4) '_top' int2str(number) 'ROC.pdf']);

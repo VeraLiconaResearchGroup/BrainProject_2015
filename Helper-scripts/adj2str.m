@@ -3,7 +3,7 @@ function PGS = adj2str(adj, nodes, edges)
 
 PGS = cell(1);
 matrix = zeros(2,edges);
-counter = 0;
+counter = 1;
 for i=1:nodes
     for j=1:nodes
         if adj(i,j)==1

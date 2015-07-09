@@ -59,5 +59,6 @@ for imethod=1:Nmethod
     Meths.Mat(:,:,imethod)=iMat;
 end
 
-
 save(['./',dirname,'/AUC/',filesaved],'Meths');
+genTopROC(['./',dirname,'/AUC/',filesaved], 10);
+genTopROC(['./',dirname,'/AUC/',filesaved], Nmethod);
