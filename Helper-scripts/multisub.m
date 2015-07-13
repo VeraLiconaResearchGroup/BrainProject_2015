@@ -1,3 +1,4 @@
+%% Loops through a data folder and creates names and dummy directories for the results of the mln_calEvaN function
 function multisub(name, start, finish)
   extraZero = '00';
   for i=str2num(start):str2num(finish)
