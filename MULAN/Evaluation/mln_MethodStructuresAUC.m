@@ -60,5 +60,4 @@ for imethod=1:Nmethod
 end
 
 save(['./',dirname,'/AUC/',filesaved],'Meths');
-genTopROC(['./',dirname,'/AUC/',filesaved], 10);
 genTopROC(['./',dirname,'/AUC/',filesaved], Nmethod);
