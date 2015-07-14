@@ -4,7 +4,7 @@
 function mln_Result2file(dirname,dataprenom,GroupMethlog)
 datafile=[dirname,'/data/',dataprenom,'.mat'];
 %GroupMethlog={'TimeBasic','FreqBasic','Hsquare','Granger','FreqAH','MutualInform'};
-is3dimemsion=[1,0,1,1,0,1,1,1,1];
+is3dimemsion=[1,1];
 for igroup=1:length(GroupMethlog)
     Resultfile=[dirname,'/Results/',GroupMethlog{igroup},'_',dataprenom];
     is3d=is3dimemsion(igroup);

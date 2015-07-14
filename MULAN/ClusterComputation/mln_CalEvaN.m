@@ -25,8 +25,7 @@ function mln_CalEvaN(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
 %                                                  ['rtenslearn_c' '.' ext]));
 
 
-VGroupMethlog={'TimeBasic','FreqBasic','Hsquare','Granger', ...
-               'FreqAH','MutualInform','TE', 'Genie', 'Tigress'};
+VGroupMethlog={'Genie', 'Tigress'};
 
 if ~exist(dirname,'dir')
     mkdir(dirname);
