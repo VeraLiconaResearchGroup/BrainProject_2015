@@ -20,4 +20,4 @@ calParams.tigressL = '3';
 calParams.tigressLarsAlgo = '0';
 calParams.tigressScoreMethod = '1';
 
-save('nmmParams6.mat','calParams');
+save('nmmParams.mat','calParams');
