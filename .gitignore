@@ -3,3 +3,4 @@
 .DS_Store
 MULAN/Examples/data/
 *.mex*
+.#*

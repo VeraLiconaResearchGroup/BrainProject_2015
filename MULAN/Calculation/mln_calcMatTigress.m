@@ -67,7 +67,7 @@ for i=1:Nwindows
     end
     
     freq = tigress(data, 'R', R, 'alpha', alpha, 'L', L, 'LarsAlgo', ...
-                   LarsAlgo, 'parallel', true);
+                   LarsAlgo, 'parallel', false);
     iMat=score_edges(freq, 'method', method);   
         
     for j=1:Nmethod
