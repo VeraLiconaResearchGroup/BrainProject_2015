@@ -22,11 +22,13 @@ if ~exist([strname], 'file')
 end
 
 %Convert the remaining time series
-extraZero = '0';
-for n=str2num(start):str2num(finish)
-   if n >= 10
-       extraZero = '';
-   end
+extraZero = '00';
+  for i=str2num(start):str2num(finish)
+    if i < 100 & i > 9
+        extraZero = '0';
+    elseif i >= 100
+        extraZero = '';
+    end
    foldername = [simname, '_sub', extraZero, num2str(i)];
    mkdir(foldername);
    dir = [foldername];
