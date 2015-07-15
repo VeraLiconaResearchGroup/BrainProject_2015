@@ -4,7 +4,7 @@ sims = load([simname '.mat']);
 LFP = sims.ts(1:sims.Ntimepoints,:)';
 Connectivity = squeeze(sims.net(1,:,:));
 Params.fs = 0.500;
-save([simname,'_N',num2str(sims.Nnodes),'T',num2str(sims.Ntimepoints),'_1.mat'], 'LFP', 'Connectivity', 'Params');
+save([simname,'_1fmriCS100S1N', num2str(sims.Ntimepoints), '.mat'], 'LFP', 'Connectivity', 'Params');
 
 %Convert first time series and create structure file
 PGS = cell(1);
@@ -28,5 +28,5 @@ for n=2:sims.Nsubjects
    LFP = sims.ts(((n-1)*sims.Ntimepoints)+1:(n*sims.Ntimepoints),:)';
    Connectivity = squeeze(sims.net(n,:,:));
    Params.fs = 0.500;
-   save([simname,'_N',num2str(sims.Nnodes),'T',num2str(sims.Ntimepoints),'_', num2str(n), '.mat'], 'LFP', 'Connectivity', 'Params');
+   save([simname,'_', num2str(n), 'fmriCS100S1N', num2str(sims.Ntimepoints), '.mat'], 'LFP', 'Connectivity', 'Params');
 end
