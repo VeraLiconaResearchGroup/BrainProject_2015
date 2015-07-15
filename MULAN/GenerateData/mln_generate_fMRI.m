@@ -86,6 +86,12 @@ else
     %e    = spm_rand_mar(T,n,1/2)/8;
 
     LFP=y';
+    
+    if (any(any(isnan(LFP))))
+        disp('NaN time series');
+        exit;
+    end
+    
     Params.fs=1/TR;
     Connectivity=pP.A;
     %Connectivity(Connectivity<0)=0;
