@@ -1,5 +1,5 @@
 function multisub_sims(simname, start, finish)
-sims = load(['../' simname '.mat']);
+sims = load([simname '.mat']);
 
 %Convert first time series and create structure file
 edges = int32(nnz(squeeze(sims.net(1,:,:))) - sims.Nnodes);
