@@ -28,7 +28,6 @@ end
 fieldname=fieldnames(calresult);
 % remove params and connectivity
 fieldname(strcmp('Params',fieldname))=[];
-
 fieldname(strcmp('Connectivity',fieldname))=[];
 
 consensus44=zeros(size(calresult.Connectivity,1));
@@ -39,6 +38,9 @@ consensustop10=zeros(size(calresult.Connectivity,1));
 for i=1:10
   methodname = fieldname{AUC(i,2)};
   mat = calresult.(methodname);
+  if isnan(max(mat))
+      mat = 0;
+  end
   consensustop10 = consensustop10 + mat;
 end
 consensustop10 = consensustop10/10;
@@ -46,6 +48,9 @@ consensustop10 = consensustop10/10;
 for i=1:length(fieldname)
   methodname = fieldname{i};
   mat = calresult.(methodname);
+  if isnan(max(mat))
+      mat = 0;
+  end
   consensus44 = consensus44+mat;
   if(i<=42)
     consensus42 = consensus42+mat;
@@ -53,21 +58,19 @@ for i=1:length(fieldname)
     consensus2 = consensus2+mat;
   end
 end
+
+assignin('base','con44in', consensus44);
 consensus44 = consensus44/44;
 consensus42 = consensus42/42;
 consensus2 = consensus2/2;
-
-fieldname(45)='Consensus44';
-fieldname(46)='Consensus42';
-fieldname(47)='Consensus2';
-fieldname(48)='ConsensusTop10';
+assignin('base','con44end', consensus44);
 
 calresult.('Consensus44') = consensus44;
 calresult.('Consensus42') = consensus42;
 calresult.('Consensus2') = consensus2;
 calresult.('ConsensusTop10') = consensustop10;
 
-save(['./',dirname,'/ToutResults/Tout_',prenom,'.mat'], 'calresult');
+save(['./',dirname,'/ToutResults/Tout_',prenom,'.mat'], '-struct', 'calresult');
 %%
 %idx=find(strcmp('pCOH1',fieldname));
 %fieldname(idx)=[];
@@ -101,11 +104,11 @@ for imethod=1:Nmethod
         
     else
         disp(Methods);  
-        %iMat=mean(abs(Mat),3);
-        iMat=abs(Mat);
+        iMat=mean(abs(Mat),3);
+        %iMat=abs(Mat);
         iMat=iMat-diag(diag(iMat));
         [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,AAC]=mln_calc_FalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
-        %chis=mln_chis(Mat,thresh3(1));
+        chis=mln_chis(Mat,thresh3(1));
     end
     Meths.MSAUC(imethod,1)=auc;
     Meths.Fpr(imethod,:) = squeeze(Fpr);
@@ -113,11 +116,11 @@ for imethod=1:Nmethod
     Meths.PPV(imethod,:) = squeeze(PPV);
     Meths.AAC(imethod,:) = squeeze(AAC);
     
-%    if isempty(chis)
-%        pause
-%    end
+    if isempty(chis)
+        pause
+    end
     
-    %Meths.Mth(imethod,1)=chis;
+    Meths.Mth(imethod,1)=chis;
     Meths.Mat(:,:,imethod)=iMat;
 end
 
