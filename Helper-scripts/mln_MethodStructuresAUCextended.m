@@ -5,8 +5,8 @@ function flg=mln_MethodStructuresAUCextended(dirname,prenom)
 flg=0; % flg for the error
 
 
-filename=['./',dirname,'/ToutResults/Tout_',prenom,'.mat'];
-calresult=load(filename);
+filename1=['./',dirname,'/ToutResults/Tout_',prenom,'.mat'];
+calresult=load(filename1);
 
 filename=['./',dirname,'/AUC/AUC_',prenom,'.mat'];
 results=load(filename);
@@ -67,7 +67,7 @@ calresult.('Consensus42') = consensus42;
 calresult.('Consensus2') = consensus2;
 calresult.('ConsensusTop10') = consensustop10;
 
-
+save(['./',dirname,'/ToutResults/Tout_',prenom,'.mat'], 'calresult');
 %%
 %idx=find(strcmp('pCOH1',fieldname));
 %fieldname(idx)=[];
