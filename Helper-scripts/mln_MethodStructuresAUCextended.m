@@ -107,7 +107,7 @@ for imethod=1:Nmethod
         iMat=mean(abs(Mat),3);
         %iMat=abs(Mat);
         iMat=iMat-diag(diag(iMat));
-        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,ACC]=mln_calc_FalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
+        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,ACC]=mln_calcFalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
         chis=mln_chis(Mat,thresh3(1));
     end
     Meths.MSAUC(imethod,1)=auc;
