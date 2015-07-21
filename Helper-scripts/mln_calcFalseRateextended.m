@@ -82,7 +82,7 @@ Nt=length(t);
 Fpr=zeros(Nt,1);
 Tpr=zeros(Nt,1);
 PPV=zeros(Nt,1);
-AAC=zeros(Nt,1);
+ACC=zeros(Nt,1);
 pFDR=Fpr;
 prh0=NH0/(NH0+NH1);
 prh1=NH1/(NH0+NH1);
@@ -101,7 +101,7 @@ for i=2:Nt
     else
       PPV(i)=(sum(H1>=t(i)))/((sum(H0>t(i)))+(sum(H1>=t(i))));
     end
-    AAC(i)=(sum(H1>=t(i))+NH0-sum(H0>t(i)))/(NH0+NH1);
+    ACC(i)=(sum(H1>=t(i))+NH0-sum(H0>t(i)))/(NH0+NH1);
     pFDR(i)=Fpr(i)*prh0/(Fpr(i)*prh0+Tpr(i)*prh1);   
     dMatrix(i)=norm([Fpr(i)-corernposition(1),Tpr(i)-corernposition(2)]);
 end
@@ -130,4 +130,4 @@ varargout {9}=auc;
 varargout {10}=flag_use;
 varargout{11}=th_offcut_roc;
 varargout(12)=mat2cell(PPV);
-varargout(13)=mat2cell(AAC);
+varargout(13)=mat2cell(ACC);
