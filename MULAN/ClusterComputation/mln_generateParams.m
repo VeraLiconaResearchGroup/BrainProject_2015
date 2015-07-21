@@ -10,14 +10,14 @@ calParams.stepfreq='0.5';
 calParams.defbins='16';
 calParams.defMaxDelay='5';
 
-calParams.genieMethod = '1';
+calParams.genieMethod = '0';
 calParams.genieNbTrees = '500';
-calParams.genieK = '-1';
+calParams.genieK = '0';
 
-calParams.tigressR = '2000';
+calParams.tigressR = '500';
 calParams.tigressAlpha = '0.3';
 calParams.tigressL = '3';
 calParams.tigressLarsAlgo = '0';
-calParams.tigressScoreMethod = '1';
+calParams.tigressScoreMethod = '0';
 
 save('nmmParams.mat','calParams');

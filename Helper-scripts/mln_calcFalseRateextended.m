@@ -3,7 +3,8 @@
 % Huifang, Sep.,12; updated;
 % Huifang, 21, Feb; cutoff of auc 
 %th_offcut_roc=[th,iFPR,iTPR];
-function varargout =mln_calc_FalseRateextended(iM,Standard_Net,issymetricM,issample)
+
+function varargout =mln_calcFalseRateextended(iM,Standard_Net,issymetricM,issample)
 
 % iM is the Matrix to be evaluated; Standard_Net is the Matrix as
 % reference; issymetricM=[1,1] means both Matrix are sysmetrics

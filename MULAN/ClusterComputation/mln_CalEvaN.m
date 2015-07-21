@@ -77,3 +77,4 @@ end
 
 MULANCalMUltiBP(dirname,dataname,paramsfile,VGroupMethlog)
 mln_MethodStructuresAUC(dirname,dataname);
+%mln_MethodStructuresAUCextended(dirname,dataname);
