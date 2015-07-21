@@ -81,7 +81,7 @@ Meths.Mth=zeros(Nmethod,1);
 Meths.Fpr=zeros(Nmethod,100);
 Meths.Tpr=zeros(Nmethod,100);
 Meths.PPV=zeros(Nmethod,100);
-Meths.AAC=zeros(Nmethod,100);
+Meths.ACC=zeros(Nmethod,100);
 
 filesaved=['AUC_',prenom,'_extended.mat'];
 
@@ -100,21 +100,21 @@ for imethod=1:Nmethod
         Fpr=zeros(100,1);
         Tpr=zeros(100,1);
         PPV=zeros(100,1);
-        AAC=zeros(100,1);
+        ACC=zeros(100,1);
         
     else
         disp(Methods);  
         iMat=mean(abs(Mat),3);
         %iMat=abs(Mat);
         iMat=iMat-diag(diag(iMat));
-        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,AAC]=mln_calc_FalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
+        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,ACC]=mln_calc_FalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
         chis=mln_chis(Mat,thresh3(1));
     end
     Meths.MSAUC(imethod,1)=auc;
     Meths.Fpr(imethod,:) = squeeze(Fpr);
     Meths.Tpr(imethod,:) = squeeze(Tpr);
     Meths.PPV(imethod,:) = squeeze(PPV);
-    Meths.AAC(imethod,:) = squeeze(AAC);
+    Meths.ACC(imethod,:) = squeeze(ACC);
     
     if isempty(chis)
         pause
