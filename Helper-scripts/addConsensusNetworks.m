@@ -4,10 +4,11 @@ function flg=addConsensusNetworks(dirname,prenom)
 
 flg=0; % flg for the error
 
-topTen = {'' '' '' '' '' '' '' '' '' ''};
+topTen = {'BCorrD' 'Genie' 'BCohF' 'BCorrU' 'PCohF' 'Tigress' 'BH2U' ...
+         'BH2D' 'BTED' 'BTEU'};
 molecMeths ={'Genie' 'Tigress'};
 exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'Top10' 'BCohW' 'PCohW' ...
-           'pCOH1'};
+           'pCOH1', 'Connectivity', 'Params'};
 
 filename1=['./',dirname,'/ToutResults/Tout_',prenom,'.mat'];
 calresult=load(filename1);
@@ -18,9 +19,9 @@ consensustop10=zeros(size(calresult.Connectivity,1));
 
 count = 0.0;
 for i=1:10
-  methodname = fieldname{topTen{i}};
+  methodname = topTen{i};
   mat = calresult.(methodname);
-  if any(isnan(Mat(:)))
+  if any(isnan(mat(:)))
   else
       consensustop10 = consensustop10 + mat;
       count = count + 1;
@@ -38,7 +39,7 @@ for i=1:length(fieldname)
   methodname = fieldname{i};
   mat = calresult.(methodname);
   
-  if any(isnan(Mat(:))) | ismember(methodname, exclude)
+  if ismember(methodname, exclude) | any(isnan(mat(:)))
   else
       if ismember(methodname, molecMeths)
           consensus2 = consensus2+mat;

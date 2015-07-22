@@ -1,4 +1,4 @@
-function topMethods(path)
+function topMethodsExtended(path)
 
 cd(path);
 d = dir;
@@ -6,18 +6,18 @@ isub = [d(:).isdir];
 folderNames = {d(isub).name}';
 folderNames(ismember(folderNames,{'.','..'})) = [];
 
-meths = cell.empty(44,0);
-aucs = double.empty(44,0);
-ppv = double.empty(44,0);
-acc = double.empty(44,0);
+meths = cell.empty(48,0);
+aucs = double.empty(48,0);
+ppv = double.empty(48,0);
+acc = double.empty(48,0);
 
 %Average
 for k=1:length(folderNames)
     dirname = ['./', folderNames{k}, '/AUC/'];
     filename = dir([dirname '*.mat']);
-    filename = filename.name;
+    [x, y] = filename.name;
         
-    l = load([dirname filename]);
+    l = load([dirname y]);
     
     meths = l.Meths.Methodnames;
     aucs = horzcat(aucs, l.Meths.MSAUC);
@@ -45,19 +45,18 @@ stds = std(acc, 0, 2);
 disp(result)
 
 
-meths = cell.empty(44,0);
-aucs = int64.empty(44,0);
-ppv = int64.empty(44,0);
-acc = int64.empty(44,0);
-
+meths = cell.empty(48,0);
+aucs = int64.empty(48,0);
+ppv = int64.empty(48,0);
+acc = int64.empty(48,0);
 
 %Rank
 for k=1:length(folderNames)
     dirname = ['./', folderNames{k}, '/AUC/'];
     filename = dir([dirname '*.mat']);
-    filename = filename.name;
-        
-    l = load([dirname filename]);
+    [x, y] = filename.name;
+     
+    l = load([dirname y]);
     
     meths = l.Meths.Methodnames;
     aucRank = tiedrank(l.Meths.MSAUC);
