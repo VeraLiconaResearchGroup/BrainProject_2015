@@ -9,7 +9,7 @@ folderNames(ismember(folderNames,{'.','..'})) = [];
 meths = cell.empty(44,0);
 aucs = int64.empty(44,0);
 ppv = int64.empty(44,0);
-aac = int64.empty(44,0);
+acc = int64.empty(44,0);
 
 parfor k=1:length(folderNames)
     dirname = ['./', folderNames{k}, '/AUC/'];
@@ -30,21 +30,21 @@ for k=1:length(folderNames)
     meths = l.Meths.Methodnames;
     [~, aucRank] = sort(l.Meths.MSAUC);
     [~, ppvRank] = sort(max(l.Meths.PPV,[], 2));
-    [~, aacRank] = sort(max(l.Meths.AAC,[], 2));
+    [~, accRank] = sort(max(l.Meths.ACC,[], 2));
     
     aucs = horzcat(aucs, aucRank);
     ppv = horzcat(ppv, ppvRank);
-    aac = horzcat(aac, aacRank);    
+    acc = horzcat(acc, accRank);    
 end
 
 sums = sum(aucs,2);
-[result, index] = sortrows(horzcat(meths, num2cell(sum)), -2);
+[result, index] = sortrows(horzcat(meths, num2cell(sums)), 2);
 disp(result)
 
 sums = sum(ppv,2);
-[result, index] = sortrows(horzcat(meths, num2cell(sum)), -2);
+[result, index] = sortrows(horzcat(meths, num2cell(sums)), 2);
 disp(result)
 
-sums = sum(aac,2);
-[result, index] = sortrows(horzcat(meths, num2cell(sum)), -2);
+sums = sum(acc,2);
+[result, index] = sortrows(horzcat(meths, num2cell(sums)), 2);
 disp(result)

@@ -9,7 +9,7 @@ folderNames(ismember(folderNames,{'.','..'})) = [];
 meths = cell.empty(44,0);
 aucs = double.empty(44,0);
 ppv = double.empty(44,0);
-aac = double.empty(44,0);
+acc = double.empty(44,0);
 
 parfor k=1:length(folderNames)
     dirname = ['./', folderNames{k}, '/AUC/'];
@@ -30,7 +30,7 @@ for k=1:length(folderNames)
     meths = l.Meths.Methodnames;
     aucs = horzcat(aucs, l.Meths.MSAUC);
     ppv = horzcat(ppv, max(l.Meths.PPV,[], 2));
-    aac = horzcat(aac, max(l.Meths.AAC,[], 2));
+    acc = horzcat(acc, max(l.Meths.ACC,[], 2));
     
 end
 
@@ -44,7 +44,7 @@ stds = std(ppv, 0, 2);
 [result, index] = sortrows(horzcat(meths, num2cell(means), num2cell(stds)), -2);
 disp(result)
 
-means = mean(aac,2);
-stds = std(aac, 0, 2);
+means = mean(acc,2);
+stds = std(acc, 0, 2);
 [result, index] = sortrows(horzcat(meths, num2cell(means), num2cell(stds)), -2);
 disp(result)
