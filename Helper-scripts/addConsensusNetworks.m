@@ -1,6 +1,6 @@
 % Huifang Wang, Sep. 26, 2013
 % Huifang Wang, Nov. 26, 2013 update Method Structure AUC for mlnI
-function flg=mln_AddConsensusNets(dirname,prenom)
+function flg=addConsensusNetworks(dirname,prenom)
 
 flg=0; % flg for the error
 
