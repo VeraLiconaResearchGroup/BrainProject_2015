@@ -30,12 +30,13 @@ filesaved=['AUC_',prenom,'.mat'];
 Meths.Methodnames=fieldname;
 
 Meths.Connectivity=calresult.Connectivity;
+ncheck = true;
 
 for imethod=1:Nmethod
     Methods=fieldname{imethod};
+    
     Mat=calresult.(Methods);
-    if isnan(max(Mat))
-        
+    if any(isnan(Mat(:)))
         auc=0;
         chis=1;
         iMat=NaN(size(Mat,1));
@@ -43,11 +44,11 @@ for imethod=1:Nmethod
         Tpr=zeros(100,1);
         PPV=zeros(100,1);
         ACC=zeros(100,1);
-        
-    else
+    else     
         iMat=mean(abs(Mat),3);
         iMat=iMat-diag(diag(iMat));
-        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,ACC]=mln_calcFalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
+        [~,~,~,Fpr,Tpr,~,~,~,auc,~,thresh3,PPV,ACC]= ...
+            mln_calcFalseRateextended(iMat,calresult.Connectivity,mln_issymetricM(Methods),1);
         chis=mln_chis(Mat,thresh3(1));
     end
     
