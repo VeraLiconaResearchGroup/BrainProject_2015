@@ -1,5 +1,6 @@
 function multisub_analyze(name, start, finish)
     extraZero = '00';
+    diagonalOnes = diag(diag(ones(49,49)));
     for j=str2num(start):str2num(finish)
       if j < 100 & j > 9
         extraZero = '0';
@@ -8,15 +9,15 @@ function multisub_analyze(name, start, finish)
       end
       foldername = [name, '_Sub', extraZero, num2str(j)];
       method = '';
-      family = '';
-      edgeMean = 0;
-      edgeMax = 0;
-      edgeMin = 0;
+      meanMat = zeros(49,49);
+      minMat = ones(49,49);
+      maxMat = zeros(49,49);
       All = zeros(42,3);
       All(:,2) = 1;
+      mkdir('Analysis');
       mkdir(['Analysis/', foldername, '_analysis']);
+      mkdir(['Analysis/', foldername, '_analysis/AllMatrices']);
       for i=1:41
-      %pCOH1 is case 16 but is giving NaN values
         switch i
           case 1
             method = 'AS';
@@ -103,69 +104,42 @@ function multisub_analyze(name, start, finish)
           otherwise
              method = '';
         end
-        if i <= 16
-          family = 'FreqAH';
-        elseif i <= 18
-          family = 'FreqBasic';
-        elseif i ==19
-          family = 'Genie';
-        elseif i <= 22
-          family = 'Granger';
-        elseif i <= 26
-          family = 'Hsquare';
-        elseif i <= 32
-          family = 'MutualInform';
-        elseif i <= 36
-          family = 'TE';
-        elseif i == 37
-          family = 'Tigress';
-        else
-          family = 'TimeBasic';
-        end
-      load([foldername, '/Results/', family, '_', foldername, 'fmriCS100S1N204.mat']);
-      adj = eval([method, '.Mat']);
+      load([foldername, '/ToutResults/Tout_', foldername, 'fmriCS100S1N204.mat']);
+      adj = eval(method);
+      adj = abs(adj);
 %      if ndims(adj) == 2
 %        adj = abs(adj);
 %      else
 %        adj = mean(abs(adj),3);
 %      end
-      adj = mean(abs(adj),3);
-      dlmwrite(['Analysis/', foldername, '_analysis/', method, '_Adj.txt'], adj, 'delimiter', '\t');
-      matMean = zeros(49,49);
-      matMin = ones(49,49);
-      matMax = zeros(49,49);
+      dlmwrite(['Analysis/', foldername, '_analysis/AllMatrices/', method, '_Adj.txt'], adj, 'delimiter', '\t');
       for m=1:49
         for n=1:49
           if m ~= n
-            matMean(m,n) += adj(m,n);
-            if adj(m,n) > matMax(m,n)
-              matMax(m,n) = adj(m,n);
+            if adj(m,n) > maxMat(m,n)
+              maxMat(m,n) = adj(m,n);
             end
-            if adj(m,n) < matMin(m,n)
-              matMin(m,n) = adj(m,n);
+            if adj(m,n) < minMat(m,n)
+              minMat(m,n) = adj(m,n);
             end
-            All(i,1) += adj(m,n);
-            if adj(m,n) < All(i,2)
-              All(i,2) = adj(m,n);
-            end
-            if adj(m,n) > All(i,3)
-              All(i,3) = adj(m,n);
-            end
-          else
-            matMean(m,n) = 1;
-            matMax(m,n) = 1;
           end
         end
       end
-      All(i,1) /= 2352;
-      All(42,1) += All(i,1);
-      if All(i,2) < All(42,2)
-        All(42,2) = All(i,2);
-      end
-      if All(i,3) > All(42,3)
-        All(42,3) = All(i,3);
-      end
+      tempMat = adj - diag(diag(adj));
+      meanMat = meanMat + tempMat;
+      All(i,1) = sum(sum(tempMat)) / 2352;
+      All(i,2) = min(min(tempMat + diagonalOnes));
+      All(i,3) = max(max(tempMat));
+      All(42,1) = All(42,1) + All(i,1);
     end
-    All(42,1) /= 41;
-    dlmwrite(['Analysis/', foldername, '_analysis/AllMethodStats.txt'], All, 'delimiter', '\t');
+    All(42,1) = All(42,1) / 41;
+    All(42,2) = min(min(minMat));
+    All(42,3) = max(max(maxMat));
+    meanMat = meanMat / 41;
+    meanMat = meanMat + diagonalOnes;
+    maxMat = maxMat + diagonalOnes;
+    dlmwrite(['Analysis/', foldername, '_analysis/MeanMatrix.txt'], meanMat, 'delimiter', '\t');
+    dlmwrite(['Analysis/', foldername, '_analysis/MinMatrix.txt'], minMat, 'delimiter', '\t');
+    dlmwrite(['Analysis/', foldername, '_analysis/MaxMatrix.txt'], maxMat, 'delimiter', '\t');
+    dlmwrite(['Analysis/', foldername, '_analysis/CombinedAnalysis.txt'], All, 'delimiter', '\t');
   end
