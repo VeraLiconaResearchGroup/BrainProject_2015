@@ -107,11 +107,6 @@ function multisub_analyze(name, start, finish)
       load([foldername, '/ToutResults/Tout_', foldername, 'fmriCS100S1N204.mat']);
       adj = eval(method);
       adj = abs(adj);
-%      if ndims(adj) == 2
-%        adj = abs(adj);
-%      else
-%        adj = mean(abs(adj),3);
-%      end
       dlmwrite(['Analysis/', foldername, '_analysis/AllMatrices/', method, '_Adj.txt'], adj, 'delimiter', '\t');
       for m=1:49
         for n=1:49
