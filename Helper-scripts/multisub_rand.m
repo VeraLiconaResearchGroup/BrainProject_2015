@@ -1,3 +1,11 @@
+%% Runs MULAN with random networks, starting with edge lists of random networks
+%% Parameters
+% simname: name of NetSim data
+% first: # of first subject
+% last: # of last subject
+%% Example execution: multisub_sims sim4 1 50
+% Note: multisub_sims will iterate through every consecutive subject number from the start value to the finish value
+
 function multisub_rand(start, finish)
   extraZero = '00';
   for i=str2num(start):str2num(finish)
