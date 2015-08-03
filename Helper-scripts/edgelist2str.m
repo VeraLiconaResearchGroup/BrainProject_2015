@@ -1,5 +1,5 @@
 %For converting an edgelist exported from an R igraph into a structure file
-%edgelist = filename of an edgelist
+%edgelist = filename of an edgelist, with the head nodes in the first column and corresponding tail nodes in the second
 %nodes = number of nodes
 %edges = number of edges
 function PGS = edgelist2str(edgelist, nodes, edges)
