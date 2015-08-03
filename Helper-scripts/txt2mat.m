@@ -1,6 +1,10 @@
 %%Converts a DREAM5 method results text file into a mat format for MULAN to evaluate
-% Change filename when actually loading results
-fileID = fopen('test.txt');
+%% Parameters
+% filename: name of a GENIE or TIGRESS result file, a list of edges in the format: [head node] [tail node] [edge weight]
+%% Example execution: txt2mat results
+
+function txt2mat(filename)
+fileID = fopen([filename, '.txt']);
 orig = textscan(fileID, '%s %s %f');
 fclose(fileID);
 nodes1 = cell2mat(orig(1));
@@ -34,4 +38,4 @@ N = size(nodes1);
 for n=1:N
   results(nodes1(n,1),nodes2(n,1)) = connections(n,1);
 end
-save('results.mat', 'results', '-double');
+save([filename,'.mat'], 'results', '-double');
