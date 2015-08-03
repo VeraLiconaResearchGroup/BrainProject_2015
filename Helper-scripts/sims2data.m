@@ -1,4 +1,8 @@
-%%Converts the NetSim data into a MULAN time series dataset
+%% Converts the NetSim data into a MULAN time series dataset
+%% Parameters
+% simname: name of a NetSim file
+%% Example execution: sims2data sim4
+
 function sims2data(simname)
 sims = load([simname '.mat']);
 LFP = sims.ts(1:sims.Ntimepoints,:)';
