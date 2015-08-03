@@ -1,4 +1,6 @@
-%Generates a random graph with the specified number of nodes and edges
+% Generates a random graph with the specified number of nodes and edges
+% nodes = # of nodes
+% edges = # of edges
 function strfile = genstrfile(nodes, edges)
 
 nodes = 89;
