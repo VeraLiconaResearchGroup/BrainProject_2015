@@ -1,3 +1,9 @@
+// Generate n random networks using the igraph package and save edge lists. Also saves a list of attributes
+// for each random network generated.
+// Parameters
+// n: # of networks
+// Example execution: genrand50 100
+
 genrand50<-function(n) {
 nodes<-numeric(n)
 edges<-numeric(n)
