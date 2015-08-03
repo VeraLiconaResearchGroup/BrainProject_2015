@@ -1,7 +1,7 @@
 %% Converts Michael's ICA time series into format for MULAN and runs CalEvaN using a dummy Connectivity matrix
 %% Parameters
-% filename = filename of Michael's data
-% foldername = name of directory for MULAN results to be created
+% filename: filename of Michael's data
+% foldername: name of directory for MULAN results to be created
 %% Example execution: genData ADHD_Sub001.txt ADHD_Sub001
 % Note: genData is called by multisub so generally no need to call genData independently
 function genData(filename, foldername)
