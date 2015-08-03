@@ -1,8 +1,8 @@
 %% For converting an edgelist exported from an R igraph into a structure file
 %% Parameters
-% edgelist = filename of an edgelist, with the head nodes in the first column and corresponding tail nodes in the second
-% nodes = number of nodes
-% edges = number of edges
+% edgelist: filename of an edgelist, with the head nodes in the first column and corresponding tail nodes in the second
+% nodes: number of nodes
+% edges: number of edges
 %% Example execution: edgelist2str edgelist 50 80
 function edgelist2str(edgelist, nodes, edges)
 
