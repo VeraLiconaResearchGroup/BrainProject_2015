@@ -1,3 +1,11 @@
+%% Runs MULAN with the user specified number of NetSim subject time series
+%% Parameters
+% simname: name of NetSim data
+% first: # of first subject
+% last: # of last subject
+%% Example execution: multisub_sims sim4 1 50
+% Note: multisub_sims will iterate through every consecutive subject number from the start value to the finish value
+
 function multisub_sims(simname, start, finish)
 sims = load([simname '.mat']);
 
