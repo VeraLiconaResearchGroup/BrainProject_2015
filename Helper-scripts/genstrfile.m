@@ -1,7 +1,7 @@
 %% Generates a random graph with the specified number of nodes and edges
 %% Parameters
-% nodes = # of nodes
-% edges = # of edges
+% nodes: # of nodes
+% edges: # of edges
 %% Example execution: genstrfile 50 200
 function strfile = genstrfile(nodes, edges)
 
