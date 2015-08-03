@@ -1,4 +1,6 @@
-%% Converts ICA time series into format for MULAN and runs CalEvaN using a dummy Connectivity matrix.
+%% Converts Michael's ICA time series into format for MULAN and runs CalEvaN using a dummy Connectivity matrix.
+%filename = filename of Michael's data i.e. ADHD_Sub001.txt
+%foldername = name of directory for MULAN results to be created i.e. ADHD_Sub001
 function genData(filename, foldername)
     fileID=fopen(['datafolder/', filename]);
     header  = textscan(fileID, '%s', 49);
