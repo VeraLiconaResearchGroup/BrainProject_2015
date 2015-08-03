@@ -1,4 +1,7 @@
-% Generate ROC curves for all methods. Initial argument is the Meths struct from AUC
+% Generate ROC curves for all methods.
+% Meths = Meths struct from the AUC file saved in the AUC folder after each run.
+% AUC file will typically be in the format: AUC_[folder name]fmriCS100S1N[length of time series].mat
+% Meths is extracted by loading that AUC file and then typing in the command line: genROC Meths
 function genROC(Meths)
   x = Meths.Fpr;
   y = Meths.Tpr;
