@@ -13,6 +13,8 @@ function multisub_analyze(name, start, finish)
     diagonalOnes = diag(diag(ones(49,49)));
     Combined = zeros(str2num(finish)-str2num(start), 3);
     mkdir('Analysis');
+    
+    % Iterate through results
     for j=str2num(start):str2num(finish)
       if j < 100 & j > 9
         extraZero = '0';
@@ -28,6 +30,8 @@ function multisub_analyze(name, start, finish)
       All(:,2) = 1;
       mkdir(['Analysis/', foldername, '_analysis']);
       mkdir(['Analysis/', foldername, '_analysis/AllMatrices']);
+      
+      % Iterate through each individual method's adjacency matrix
       for i=1:41
         switch i
           case 1
@@ -119,6 +123,8 @@ function multisub_analyze(name, start, finish)
       adj = eval(method);
       adj = abs(adj);
       dlmwrite(['Analysis/', foldername, '_analysis/AllMatrices/', method, '_Adj.txt'], adj, 'delimiter', '\t');
+      
+      % Check and compare every edge for min and max
       for m=1:49
         for n=1:49
           if m ~= n
@@ -131,13 +137,19 @@ function multisub_analyze(name, start, finish)
           end
         end
       end
+      
+      % Add all edge values from the method for the mean
       tempMat = adj - diag(diag(adj));
       meanMat = meanMat + tempMat;
+      
+      % Add mean, min, and max edges for the method to the complete list
       All(i,1) = sum(sum(tempMat)) / 2352;
       All(i,2) = min(min(tempMat + diagonalOnes));
       All(i,3) = max(max(tempMat));
       All(42,1) = All(42,1) + All(i,1);
     end
+    
+    % Compile all analysis results into their respective matrices
     All(42,1) = All(42,1) / 41;
     All(42,2) = min(min(minMat));
     All(42,3) = max(max(maxMat));
@@ -145,9 +157,13 @@ function multisub_analyze(name, start, finish)
     meanMat = meanMat + diagonalOnes;
     maxMat = maxMat + diagonalOnes;
     Combined(j - str2num(start) + 1,:)= All(42,:);
+    
+    % Save all analysis results for the subject
     dlmwrite(['Analysis/', foldername, '_analysis/MeanMatrix.txt'], meanMat, 'delimiter', '\t');
     dlmwrite(['Analysis/', foldername, '_analysis/MinMatrix.txt'], minMat, 'delimiter', '\t');
     dlmwrite(['Analysis/', foldername, '_analysis/MaxMatrix.txt'], maxMat, 'delimiter', '\t');
     dlmwrite(['Analysis/', foldername, '_analysis/AllMethodsAnalysis.txt'], All, 'delimiter', '\t');
   end
+  
+  % Save combined analysis results from all subjects
   dlmwrite(['Analysis/', name, '_CombinedAnalysis.txt'], Combined, 'delimiter', '\t');
