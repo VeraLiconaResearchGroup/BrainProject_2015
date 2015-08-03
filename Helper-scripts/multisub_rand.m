@@ -1,10 +1,11 @@
 %% Runs MULAN with random networks, starting with edge lists of random networks
 %% Parameters
-% simname: name of NetSim data
 % first: # of first subject
 % last: # of last subject
-%% Example execution: multisub_sims sim4 1 50
-% Note: multisub_sims will iterate through every consecutive subject number from the start value to the finish value
+%% Example execution: multisub_rand rand 1 100
+% Note: multisub_rand will iterate through every consecutive subject number from the start value to the finish value
+% Edge list of random networks must be stored in a directory called randnetedges in the MULAN directory, with the
+% format: [head node] [tail node]
 
 function multisub_rand(start, finish)
   extraZero = '00';
