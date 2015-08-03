@@ -1,5 +1,7 @@
-% Converts the time series from a MULAN dataset into a DREAM5 software compatible format
+%% Converts the time series from a MULAN dataset into a DREAM5 software compatible format
+% Parameters
 % filename = name of MULAN mat file to be converted into txt file
+%% Example execution: mat2txt testfile
 function mat2txt(filename)
 load([filename, '.mat']);
 outfile = [filename, '.txt'];
