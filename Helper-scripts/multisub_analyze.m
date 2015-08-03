@@ -1,6 +1,18 @@
+%% Iterates through every directory with the format [name]_Sub[# iteration] and saves adjacency matrices of the mean, min,
+%% and max edge values for all the methods and a list of the mean, min, and max edge values for each methods and for 
+%% all methods.
+%% Parameters
+% name: name of the data
+% start: # of first subject
+% finish: # of last subject
+%% Example execution: multisub_analyze ADHD 1 70
+% Note: multisub_analyze will iterate through every consecutive subject number from the start value to the finish value
+
 function multisub_analyze(name, start, finish)
     extraZero = '00';
     diagonalOnes = diag(diag(ones(49,49)));
+    Combined = zeros(str2num(finish)-str2num(start), 3);
+    mkdir('Analysis');
     for j=str2num(start):str2num(finish)
       if j < 100 & j > 9
         extraZero = '0';
@@ -14,7 +26,6 @@ function multisub_analyze(name, start, finish)
       maxMat = zeros(49,49);
       All = zeros(42,3);
       All(:,2) = 1;
-      mkdir('Analysis');
       mkdir(['Analysis/', foldername, '_analysis']);
       mkdir(['Analysis/', foldername, '_analysis/AllMatrices']);
       for i=1:41
@@ -133,8 +144,10 @@ function multisub_analyze(name, start, finish)
     meanMat = meanMat / 41;
     meanMat = meanMat + diagonalOnes;
     maxMat = maxMat + diagonalOnes;
+    Combined(j - str2num(start) + 1,:)= All(42,:);
     dlmwrite(['Analysis/', foldername, '_analysis/MeanMatrix.txt'], meanMat, 'delimiter', '\t');
     dlmwrite(['Analysis/', foldername, '_analysis/MinMatrix.txt'], minMat, 'delimiter', '\t');
     dlmwrite(['Analysis/', foldername, '_analysis/MaxMatrix.txt'], maxMat, 'delimiter', '\t');
-    dlmwrite(['Analysis/', foldername, '_analysis/CombinedAnalysis.txt'], All, 'delimiter', '\t');
+    dlmwrite(['Analysis/', foldername, '_analysis/AllMethodsAnalysis.txt'], All, 'delimiter', '\t');
   end
+  dlmwrite(['Analysis/', name, '_CombinedAnalysis.txt'], Combined, 'delimiter', '\t');
