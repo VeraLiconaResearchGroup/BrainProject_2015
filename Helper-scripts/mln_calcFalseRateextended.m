@@ -1,8 +1,14 @@
-%%function [ih,f0,f1,Fpr,Tpr,Fnr,pFDR,t,auc,flag_use,th_offcut_roc]=calc_FalseRate(iM,Standard_Net,issymetricM)
+%%function [ih,f0,f1,Fpr,Tpr,Fnr,pFDR,t,auc,flag_use,th_offcut_roc,PPV,ACC]=calc_FalseRate(iM,Standard_Net,issymetricM)
 % Huifang Wang, April, 2012, Inserm U1106
 % Huifang, Sep.,12; updated;
 % Huifang, 21, Feb; cutoff of auc 
 %th_offcut_roc=[th,iFPR,iTPR];
+%% Modified to include PPV and ACC
+%% Additional Notes:
+% True positive: sum(H1>=t(i))
+% False positive: sum(H0>t(i))
+% True negative: NH0-sum(H0>t(i))
+% False negative: NH1-sum(H1>=t(i))
 
 function varargout =mln_calcFalseRateextended(iM,Standard_Net,issymetricM,issample)
 
@@ -94,6 +100,8 @@ Tpr(1)=1;
 i=1;
 pFDR(i)=Fpr(i)*prh0/(Fpr(i)*prh0+Tpr(i)*prh1);   
     dMatrix(i)=norm([Fpr(i)-corernposition(1),Tpr(i)-corernposition(2)]);
+
+%% PPV and ACC calculations added
 for i=2:Nt
     Fpr(i)=(sum(H0>t(i)))/NH0;
     Tpr(i)=(sum(H1>=t(i)))/NH1;
@@ -103,6 +111,8 @@ for i=2:Nt
       PPV(i)=(sum(H1>=t(i)))/((sum(H0>t(i)))+(sum(H1>=t(i))));
     end
     ACC(i)=(sum(H1>=t(i))+NH0-sum(H0>t(i)))/(NH0+NH1);
+    
+%%
     pFDR(i)=Fpr(i)*prh0/(Fpr(i)*prh0+Tpr(i)*prh1);   
     dMatrix(i)=norm([Fpr(i)-corernposition(1),Tpr(i)-corernposition(2)]);
 end
