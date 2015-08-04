@@ -111,7 +111,6 @@ for i=2:Nt
       PPV(i)=(sum(H1>=t(i)))/((sum(H0>t(i)))+(sum(H1>=t(i))));
     end
     ACC(i)=(sum(H1>=t(i))+NH0-sum(H0>t(i)))/(NH0+NH1);
-    
 %%
     pFDR(i)=Fpr(i)*prh0/(Fpr(i)*prh0+Tpr(i)*prh1);   
     dMatrix(i)=norm([Fpr(i)-corernposition(1),Tpr(i)-corernposition(2)]);
@@ -140,5 +139,8 @@ varargout {8}=t;
 varargout {9}=auc;
 varargout {10}=flag_use;
 varargout{11}=th_offcut_roc;
+
+%% PPV and ACC added
 varargout(12)=mat2cell(PPV);
 varargout(13)=mat2cell(ACC);
+%%
