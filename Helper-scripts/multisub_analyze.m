@@ -31,7 +31,7 @@ function multisub_analyze(name, start, finish)
       mkdir(['Analysis/', foldername, '_analysis']);
       mkdir(['Analysis/', foldername, '_analysis/AllMatrices']);
       
-      % Iterate through each individual method's adjacency matrix
+      % Iterate through each individual method's adjacency matrix. Can be adjusted to select certain method's results.
       for i=1:41
         switch i
           case 1
